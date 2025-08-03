@@ -141,11 +141,15 @@ class SteamDBOffline:
             list[dict]: A list of dictionaries, each containing game information:
                 - steam_id (str): Steam App ID
                 - name (str): Game name
+                - logo (str): URL to logo image
                 - installdir (str): Folder name
                 - install_path (str): Full install path
                 - launch_url (str): Steam protocol URL (e.g., steam://run/730)
                 - banner (str): URL to game header image
                 - big_banner (str): URL to large hero banner
+                - vertical_banner (str): URL to vertical banner
+                - horizontal_banner (str): URL to horizontal banner
+                - info_banner (str): URL to info banner
                 - last_updated (str): Last updated timestamp (if present)
                 - stateflags (str): Install state flags (if present)
                 - size_on_disk (str): Size in bytes (if present)
@@ -161,10 +165,14 @@ class SteamDBOffline:
                 if info.get("name", "").lower().startswith("steamworks"):
                     continue
 
-                info["install_path"] = os.path.join(steamapps_path, "common", info.get("installdir", ""))
-                info["launch_url"] = f"steam://run/{info['steam_id']}"
-                info["banner"] = f"https://cdn.cloudflare.steamstatic.com/steam/apps/{info['steam_id']}/header.jpg"
-                info["big_banner"] = f"https://cdn.cloudflare.steamstatic.com/steam/apps/{info['steam_id']}/library_hero.jpg"
+                info["install_path"]         = os.path.join(steamapps_path, "common", info.get("installdir", ""))
+                info["launch_url"]           = f"steam://run/{info['steam_id']}"
+                info["logo"]                 = f"https://cdn.steamstatic.com/steam/apps/{info['steam_id']}/logo.png"
+                info["banner"]               = f"https://cdn.cloudflare.steamstatic.com/steam/apps/{info['steam_id']}/header.jpg"
+                info["big_banner"]           = f"https://cdn.cloudflare.steamstatic.com/steam/apps/{info['steam_id']}/library_hero.jpg"
+                info["vertical_banner"]      = f"https://cdn.steamstatic.com/steam/apps/{info['steam_id']}/library_600x900.jpg"
+                info["horizontal_banner"]    = f"https://cdn.steamstatic.com/steam/apps/{info['steam_id']}/capsule_231x87.jpg"
+                info["info_banner"]          = f"https://cdn.cloudflare.steamstatic.com/steam/apps/{info['steam_id']}/page_bg_generated_v6b.jpg"
                 games.append(info)
         return games
 
